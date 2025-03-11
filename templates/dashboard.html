@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+.weather-info {
+   margin-top: 100px;
+        }
+.weather-info .container {
+	 display: flex;
+	 flex-direction: column;
+	 align-items: center;
+	 padding: 20px;
+}
+ .weather-info .header {
+    width: 85%;
+	 background-color: #fff;
+	 padding: 10px;
+	 border-radius: 5px;
+	 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	 text-align: center;
+}
+ .weather-info .location {
+	 font-size: 1.2em;
+	 font-weight: bold;
+}
+ .weather-info .info {
+	 display: flex;
+	 /* justify-content: space-between; */
+	 margin-top: 10px;
+	 width: 100%;
+}
+ .weather-info .info-item {
+	 background-color: #fff;
+	 padding: 10px;
+	 border-radius: 5px;
+	 box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	 text-align: center;
+	 width: 500px;
+}
+ .weather-info .temperature {
+	 font-size: 4em;
+	 font-weight: bold;
+	 margin-bottom: 10px;
+}
+ .weather-info .icon {
+	 width: 50px;
+	 height: 50px;
+	 margin-bottom: 10px;
+}
+ .weather-info .details {
+	 font-size: 0.9em;
+}
+ .weather-info .details-item {
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+	 margin-bottom: 5px;
+}
+.ad-section {
+  margin-top: 40px;
+}
+
+.ad-content {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.ad-item {
+  width: 30%;
+  background-color: #e2fdff; 
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
+  transition: transform 0.3s ease;
+}
+
+.ad-item:hover {
+  transform: translateY(-10px);
+}
+
+    </style>
+    
+</head>
+<body>
+
+
+
+    <nav class="navbar custom-bg-transparent" id="mainNavbar" style="margin-bottom: 2px;">
+        <div class="navbar-logo">IoT Weather</div>
+        <ul class="navbar-links" id="nav-links">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#forecast">Forecast</a></li>
+          <li><a href="#devices">Devices</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="navbar-buttons">
+          <a href="/logout" class="btn login-btn"> Logout</a>
+        </div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+      </nav>
+    
+  
+    
+    <div class="weather-info">
+    <div class="container">
+        <div class="header">
+          <h1 class="location">Varanasi Weather Information</h1>
+          
+    
+    <div class="info"> <div class="info-item"> 
+    <h2 class="temperature" id="temperature">000</h2> 
+    <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="Weather Icon" class="icon"> 
+    
+    </div> 
+    <p class="info-item"> 
+        <span class="details-item">Wind Chill: 4°C</span> 
+        <span class="details-item">Heat Index: 27°C</span> 
+        <span class="details-item">Dew Point: 6.1°C</span> 
+        <span class="details-item">Wet Bulb: 24.4°C</span> 
+        <span class="details-item">Solar Radiation: 1183 W/m²</span> 
+        <span class="details-item">UV Index: 12</span> 
+    </p> 
+</div> 
+</div> 
+</div> 
+
+</div>
+
+
+      <!-- weather section of mine page -->
+        <section class="ad-section">
+        <center><h2>Weather Tips & Info</h2></center> 
+          <div class="ad-content">
+            <div class="ad-item">
+              <h3>Stay Dry!</h3> <hr>
+              <p>Don't forget your umbrella on rainy days. Our IoT system helps you plan ahead with real-time updates!</p>
+            </div>
+            <div class="ad-item">
+              <h3>Beat the Heat</h3> <hr>
+              <p>Use cooling systems efficiently during hot weather. Check real-time temperatures with our dashboard!</p>
+            </div>
+            <div class="ad-item">
+              <h3>Winter is Coming</h3> <hr>
+              <p> Being informed can help you take necessary precautions and stay safe during winter storms.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script>
+        var latitude;
+        var longitude;
+
+function loadwheather(latitude,longitude){ 
+    var request_url="https://api.openweathermap.org/data/3.0/onecall?lat=" + latitude + "&lon=" + longitude + "&appid=7131413d80c63ba32ee8141649cc4470";
+ $.ajax({
+            url: request_url,
+            success: function(data) {
+                // console.log(data);
+                // $("#weather-icon").attr("src", "http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png");
+                // $("#weather-description").text(data.weather[0].description);
+                // $("#weather-temperature").text(Math.round(data.main.temp - 273.15) + "°C");
+                // //  set temperature, 
+                console.log(data);
+                $("#temperature").html(Math.round(data.current.temp - 273.15) + "°C");
+                $(".details-item:eq(0)").html("Wind Chill: " + Math.round(data.current.feels_like - 273.15) + "°C");
+        $(".details-item:eq(1)").html("Heat Index: " + Math.round(data.current.feels_like - 273.15) + "°C");
+        $(".details-item:eq(2)").html("Dew Point: " + Math.round(data.current.dew_point - 273.15) + "°C");
+        $(".details-item:eq(3)").html("Wet Bulb: " + Math.round((data.current.temp + data.current.dew_point) / 2 - 273.15) + "°C");
+        $(".details-item:eq(4)").html("Solar Radiation: " + (data.current.uvi * 40).toFixed(0) + " W/m²");
+        $(".details-item:eq(5)").html("UV Index: " + data.current.uvi.toFixed(0));
+
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+
+    }
+    
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            loadwheather(position.coords.latitude, position.coords.longitude);
+        });
+    }
+    </script>
+</body>
+</html>
